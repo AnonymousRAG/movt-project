@@ -220,6 +220,7 @@
             border-radius: 12px;
             backdrop-filter: blur(10px);
             text-align: center;
+            display: block;
         }
         
         .video-grid-wrapper::before {
@@ -336,15 +337,24 @@
             display: flex;
             overflow-x: auto;
             gap: 0.3rem;
-            padding: 0.2rem 1.5rem;
+            padding: 0.2rem;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            justify-content: flex-start;
             position: relative;
             flex-wrap: nowrap;
             min-width: 100%;
             width: 100%;
             margin: 0 auto;
+            justify-content: flex-start;
+        }
+
+        /* 滚动视图辅助样式 */
+        .video-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 5px;
+            margin: 0 auto;
+            scrollbar-width: thin;
         }
 
         @media (max-width: 768px) {
@@ -543,6 +553,14 @@
             border-top: 2px dashed rgba(123, 170, 255, 0.6);
             box-shadow: 0 0 8px rgba(123, 170, 255, 0.6);
         }
+
+        /* 改进整个页面结构使内容居中 */
+        .results-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -581,7 +599,7 @@
 <h2 class="title is-3" style="text-align: center; margin-top: 3rem;">Overview of MoVT Framework</h2>
 <img src="static/images/pipeline.png" alt="Pipeline" style="width: 80%; max-width: 1200px; margin: 2rem auto; display: block;">
 
-<section class="results-section" style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
+<section class="results-section">
     <h2 class="title is-2" style="text-align: center; margin-bottom: 3rem;">Results</h2>
     
     <!-- 3D Motion Generation -->
@@ -592,24 +610,26 @@
         <div class="motion-comparison" style="margin-bottom: 4rem;">
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem;">Executing an aerial kick with a running approach, twist, and landing.</h4>
             <div class="video-grid-wrapper">
-                <div class="video-grid">
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/OURS.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">OURS</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/MotionLCM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MotionLCM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/BAMM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">BAMM</div>
+                <div class="video-scroll-container">
+                    <div class="video-grid">
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/OURS.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">OURS</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/MotionLCM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MotionLCM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/BAMM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">BAMM</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -620,36 +640,38 @@
         <div class="motion-comparison" style="margin-bottom: 4rem;">
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem;">Performing a back flip with a jump, tuck, and landing.</h4>
             <div class="video-grid-wrapper">
-                <div class="video-grid">
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/OURS.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">Ours</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MotionLCM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MotionLCM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/BAMM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">BAMM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MoMask.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MoMask</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MDM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MDM</div>
+                <div class="video-scroll-container">
+                    <div class="video-grid">
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/OURS.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">Ours</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MotionLCM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MotionLCM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/BAMM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">BAMM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MoMask.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MoMask</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MDM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MDM</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -660,36 +682,38 @@
         <div class="motion-comparison" style="margin-bottom: 4rem;">
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem;">Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands.</h4>
             <div class="video-grid-wrapper">
-                <div class="video-grid">
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/Ours_4x.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">Ours</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionLCM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MotionLCM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/BAMM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">BAMM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MoMask.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MoMask</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionDiffuse.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MotionDiffuse</div>
+                <div class="video-scroll-container">
+                    <div class="video-grid">
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/Ours_4x.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">Ours</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionLCM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MotionLCM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/BAMM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">BAMM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MoMask.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MoMask</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionDiffuse.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MotionDiffuse</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -700,36 +724,38 @@
         <div class="motion-comparison" style="margin-bottom: 4rem;">
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem;">Person executes Shaolin flying kicks ready stance.</h4>
             <div class="video-grid-wrapper">
-                <div class="video-grid">
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/Ours.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">Ours</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MotionLCM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MotionLCM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/BAMM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">BAMM</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MoMask.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MoMask</div>
-                    </div>
-                    <div class="video-container">
-                        <video width="300" height="auto" controls>
-                            <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MDM.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-label">MDM</div>
+                <div class="video-scroll-container">
+                    <div class="video-grid">
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/Ours.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">Ours</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MotionLCM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MotionLCM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/BAMM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">BAMM</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MoMask.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MoMask</div>
+                        </div>
+                        <div class="video-container">
+                            <video width="300" height="auto" controls>
+                                <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MDM.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-label">MDM</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -742,41 +768,43 @@
         <h3 class="title is-3" style="text-align: center; margin-bottom: 3rem;">2D Pose Generation</h3>
         
         <div class="video-grid-wrapper">
-            <div class="video-grid">
-                <!-- Cartwheel -->
-                <div class="video-container">
-                    <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person flips sideways in a cartwheel motion.</h4>
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/2D  Pose Generation/A person flips sideways in a cartwheel motion/媒体3.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
-                </div>
+            <div class="video-scroll-container">
+                <div class="video-grid">
+                    <!-- Cartwheel -->
+                    <div class="video-container">
+                        <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person flips sideways in a cartwheel motion.</h4>
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/2D  Pose Generation/A person flips sideways in a cartwheel motion/媒体3.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
 
-                <!-- Kungfu -->
-                <div class="video-container">
-                    <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person is performing Chinese kungfu.</h4>
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/2D  Pose Generation/A person is performing Chinese kungfu/媒体2.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
-                </div>
+                    <!-- Kungfu -->
+                    <div class="video-container">
+                        <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person is performing Chinese kungfu.</h4>
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/2D  Pose Generation/A person is performing Chinese kungfu/媒体2.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
 
-                <!-- Backward flip -->
-                <div class="video-container">
-                    <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person jumps and flips backward in mid-air.</h4>
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/2D  Pose Generation/A person jumps and flips backward in mid-air/媒体1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
-                </div>
+                    <!-- Backward flip -->
+                    <div class="video-container">
+                        <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">A person jumps and flips backward in mid-air.</h4>
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/2D  Pose Generation/A person jumps and flips backward in mid-air/媒体1.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
 
-                <!-- Airborne flip -->
-                <div class="video-container">
-                    <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">The person is airborne with knees bent, executing a flipping motion.</h4>
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/2D  Pose Generation/The person is airborne with knees bent, executing a flipping motion/媒体4.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
+                    <!-- Airborne flip -->
+                    <div class="video-container">
+                        <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem;">The person is airborne with knees bent, executing a flipping motion.</h4>
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/2D  Pose Generation/The person is airborne with knees bent, executing a flipping motion/媒体4.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -788,33 +816,35 @@
         <h3 class="title is-3" style="text-align: center; margin-bottom: 3rem;">3D Pose Estimation from Real-world</h3>
         
         <div class="video-grid-wrapper">
-            <div class="video-grid">
-                <!-- First comparison -->
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/3D pose estimation from real-world/1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Input Video</div>
-                </div>
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/3D pose estimation from real-world/1_.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
-                </div>
+            <div class="video-scroll-container">
+                <div class="video-grid">
+                    <!-- First comparison -->
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/3D pose estimation from real-world/1.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Input Video</div>
+                    </div>
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/3D pose estimation from real-world/1_.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
 
-                <!-- Second comparison -->
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/3D pose estimation from real-world/2.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Input Video</div>
-                </div>
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/3D pose estimation from real-world/2_.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Generated Result</div>
+                    <!-- Second comparison -->
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/3D pose estimation from real-world/2.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Input Video</div>
+                    </div>
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/3D pose estimation from real-world/2_.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Generated Result</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -826,33 +856,35 @@
         <h3 class="title is-3" style="text-align: center; margin-bottom: 3rem;">VQ-VAE Motion Reconstruction</h3>
         
         <div class="video-grid-wrapper">
-            <div class="video-grid">
-                <!-- First comparison -->
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/VQ-VAE motion reconstruction/Real1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Input Motion</div>
-                </div>
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/VQ-VAE motion reconstruction/our1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Reconstructed Motion</div>
-                </div>
+            <div class="video-scroll-container">
+                <div class="video-grid">
+                    <!-- First comparison -->
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/VQ-VAE motion reconstruction/Real1.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Input Motion</div>
+                    </div>
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/VQ-VAE motion reconstruction/our1.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Reconstructed Motion</div>
+                    </div>
 
-                <!-- Second comparison -->
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/VQ-VAE motion reconstruction/Real2.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Input Motion</div>
-                </div>
-                <div class="video-container">
-                    <video width="300" height="auto" controls>
-                        <source src="static/Videos/VQ-VAE motion reconstruction/our2.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-label">Reconstructed Motion</div>
+                    <!-- Second comparison -->
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/VQ-VAE motion reconstruction/Real2.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Input Motion</div>
+                    </div>
+                    <div class="video-container">
+                        <video width="300" height="auto" controls>
+                            <source src="static/Videos/VQ-VAE motion reconstruction/our2.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-label">Reconstructed Motion</div>
+                    </div>
                 </div>
             </div>
         </div>
