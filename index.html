@@ -215,11 +215,37 @@
             margin: 0.3rem auto;
             padding: 0.3rem 0.5rem;
             max-width: 1200px;
-            overflow: hidden;
+            overflow: visible;
             background: rgba(255,255,255,0.7);
             border-radius: 12px;
             backdrop-filter: blur(10px);
             text-align: center;
+        }
+        
+        .video-grid-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.7));
+            pointer-events: none;
+            display: block;
+            z-index: 2;
+        }
+        
+        .video-grid-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to left, transparent, rgba(255,255,255,0.7));
+            pointer-events: none;
+            display: block;
+            z-index: 2;
         }
 
         /* 视频标题样式优化 */
@@ -313,18 +339,13 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             justify-content: center;
+            position: relative;
+            flex-wrap: nowrap;
+            min-width: 100%;
+            width: 100%;
+            margin: 0 auto;
         }
-        .video-grid-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 50px;
-            background: linear-gradient(to right, transparent, white);
-            pointer-events: none;
-            display: block;
-        }
+
         @media (max-width: 768px) {
             body {
                 padding: 0.5rem;
@@ -346,9 +367,13 @@
             }
             .video-grid {
                 padding: 0.3rem;
+                justify-content: flex-start;
+                width: 100%;
+                overflow-x: auto;
             }
             .video-container {
                 flex: 0 0 300px;  /* 保持视频大小不变 */
+                min-width: 270px;
             }
             .motion-comparison .title.is-4 {
                 font-size: 1.2rem;
@@ -359,6 +384,10 @@
             }
             .video-label {
                 font-size: 0.85rem;
+            }
+            .section-separator {
+                margin: 1rem auto;
+                width: 90%;
             }
         }
 
@@ -500,13 +529,16 @@
         .section-separator {
             height: 3px;
             background: linear-gradient(90deg, #7e5efa 0%, #4354fb 100%);
-            margin: 1rem 0;
+            margin: 1rem auto;
             width: 100%;
             max-width: 1200px;
             border-radius: 4px;
             box-shadow: 0 2px 6px rgba(123, 97, 255, 0.3);
             margin-left: auto;
             margin-right: auto;
+            position: relative;
+            z-index: 5;
+            display: block;
         }
     </style>
 </head>
