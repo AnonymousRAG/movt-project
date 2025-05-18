@@ -1,0 +1,75 @@
+body {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-banner {
+    max-height: 300px;
+}
+
+.publication-banner video {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    object-fit: contain;
+}
+
+.publication-header .hero-body {
+    padding-bottom: 0;
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 45px !important;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.author-block {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.publication-links {
+    margin: 20px 0;
+}
+
+.link-block {
+    margin: 0 5px;
+}
+
+.teaser .hero-body {
+    padding-top: 0;
+    padding-bottom: 3rem;
+}
+
+.teaser {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.footer .container {
+    margin: 1.5rem auto;
+} 
