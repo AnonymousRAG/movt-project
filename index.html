@@ -219,6 +219,7 @@
             background: rgba(255,255,255,0.7);
             border-radius: 12px;
             backdrop-filter: blur(10px);
+            text-align: center;
         }
 
         /* 视频标题样式优化 */
@@ -259,12 +260,17 @@
             background: rgba(255,255,255,0.8);
             border-radius: 12px;
             margin: 0.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         video {
             width: 300px;
             height: auto;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto;
         }
 
         /* 滚动条样式优化 */
@@ -306,6 +312,7 @@
             padding: 0.2rem 0;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
+            justify-content: center;
         }
         .video-grid-wrapper::after {
             content: '';
