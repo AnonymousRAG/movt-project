@@ -561,6 +561,38 @@
             padding: 0 2rem;
             text-align: center;
         }
+
+        /* 为大型视频展示添加特殊样式 */
+        .featured-video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem auto;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .featured-video {
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            margin: 0.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .featured-video-label {
+            font-family: 'Lora', serif;
+            font-size: 1.1rem;
+            color: #1a237e;
+            margin: 0.8rem 0;
+            padding: 0.3rem 1rem;
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -633,6 +665,28 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- 特色视频展示 - 放大的空中踢腿视频 -->
+            <div style="margin-top: 3rem;">
+                <h5 style="text-align: center; font-style: italic; color: #3949ab; margin-bottom: 1.5rem;">Featured Comparison</h5>
+                <div class="featured-video-container">
+                    <video class="featured-video" controls>
+                        <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/OURS.mp4" type="video/mp4">
+                    </video>
+                    <div class="featured-video-label">OURS</div>
+                    
+                    <video class="featured-video" controls>
+                        <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/MotionLCM.mp4" type="video/mp4">
+                    </video>
+                    <div class="featured-video-label">MotionLCM</div>
+                    
+                    <video class="featured-video" controls>
+                        <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/BAMM.mp4" type="video/mp4">
+                    </video>
+                    <div class="featured-video-label">BAMM</div>
+                </div>
+            </div>
+            
             <div class="section-separator"></div>
         </div>
 
