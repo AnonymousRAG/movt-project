@@ -264,18 +264,24 @@
 
         /* 视频标签样式优化 */
         .video-label {
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            margin-top: 0.4rem;
-            font-weight: 600;
+            font-family: 'Lora', serif;
+            font-size: 0.9rem;
             color: #1a237e;
-            font-size: 0.95rem;
-            letter-spacing: 0.8px;
-            background: rgba(255,255,255,0.9);
-            padding: 0.2rem 0.6rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            text-transform: uppercase;
+            margin-top: 0.6rem;
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            font-weight: normal;
+            font-style: italic;
+            letter-spacing: 0.3px;
+            background: none;
+            box-shadow: none;
+            border: none;
+        }
+        .video-label::before {
+            content: none;
+        }
+        .video-label::after {
+            content: none;
         }
 
         /* 保持视频大小不变的同时优化容器 */
@@ -420,26 +426,10 @@
             letter-spacing: 0.3px;
         }
         .motion-comparison .title.is-4::before {
-            content: '❦';
-            font-family: 'Great Vibes', cursive;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #3949ab;
-            font-size: 2rem;
-            opacity: 0.7;
+            content: none;
         }
         .motion-comparison .title.is-4::after {
-            content: '❦';
-            font-family: 'Great Vibes', cursive;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%) rotate(180deg);
-            color: #3949ab;
-            font-size: 2rem;
-            opacity: 0.7;
+            content: none;
         }
 
         /* 2D Pose Generation 标题新样式 */
@@ -460,56 +450,10 @@
             line-height: 1.2;
         }
         .title.is-5::before {
-            content: '〜';
-            font-family: 'Sacramento', cursive;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #3949ab;
-            font-size: 2rem;
-            opacity: 0.7;
+            content: none;
         }
         .title.is-5::after {
-            content: '〜';
-            font-family: 'Sacramento', cursive;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #3949ab;
-            font-size: 2rem;
-            opacity: 0.7;
-        }
-
-        /* 视频标签新样式 */
-        .video-label {
-            font-family: 'Lora', serif;
-            font-size: 0.9rem;
-            color: #1a237e;
-            margin-top: 0.6rem;
-            padding: 0.3rem 0.8rem;
-            display: inline-block;
-            font-weight: normal;
-            font-style: italic;
-            letter-spacing: 0.3px;
-            background: none;
-            box-shadow: none;
-            border: none;
-        }
-        .video-label::before {
-            content: '✦';
-            font-family: 'Pacifico', cursive;
-            margin-right: 0.8rem;
-            color: #3949ab;
-            opacity: 0.7;
-        }
-        .video-label::after {
-            content: '✦';
-            font-family: 'Pacifico', cursive;
-            margin-left: 0.8rem;
-            color: #3949ab;
-            opacity: 0.7;
+            content: none;
         }
 
         /* 作者名新样式 */
