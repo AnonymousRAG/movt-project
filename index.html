@@ -10,6 +10,28 @@
     <script src="static/js/index.js"></script>
     <!-- 添加Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Lora:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Pacifico&family=Sacramento&display=swap" rel="stylesheet">
+    <script>
+        // 确保所有视频自动播放
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                // 尝试自动播放
+                video.play().catch(e => {
+                    console.log('Auto-play was prevented, adding click-to-play handler');
+                    // 如果浏览器阻止自动播放，添加点击事件来播放
+                    video.addEventListener('click', function() {
+                        video.play();
+                    });
+                });
+                
+                // 视频播放结束后重新开始
+                video.addEventListener('ended', function() {
+                    video.currentTime = 0;
+                    video.play();
+                });
+            });
+        });
+    </script>
     <style>
         body {
             text-align: center;
@@ -223,30 +245,10 @@
             display: block;
         }
         
-        .video-grid-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 10px;
-            background: linear-gradient(to left, transparent, rgba(255,255,255,0.7));
-            pointer-events: none;
-            display: none;
-            z-index: 2;
-        }
-        
+        /* 移除滚动指示样式 */
+        .video-grid-wrapper::before,
         .video-grid-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 10px;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.7));
-            pointer-events: none;
-            display: none;
-            z-index: 2;
+            content: none;
         }
 
         /* 视频标题样式优化 */
@@ -286,43 +288,46 @@
 
         /* 保持视频大小不变的同时优化容器 */
         .video-container {
-            flex: 0 0 300px;
-            scroll-snap-align: start;
-            transition: transform 0.2s ease;
-            padding: 0.3rem;
             background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            margin: 0.2rem;
+            border-radius: 8px;
+            padding: 0.4rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 300px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
         }
+        
         video {
-            width: 300px;
+            width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: block;
             margin: 0 auto;
         }
 
-        /* 滚动条样式优化 */
-        .video-grid::-webkit-scrollbar {
-            height: 8px;
+        /* 视频控制条只在hover时显示 */
+        video::-webkit-media-controls {
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .video-grid::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.5);
-            border-radius: 4px;
-        }
-        .video-grid::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #3949ab, #5c6bc0);
-            border-radius: 4px;
-        }
-        .video-grid::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(90deg, #1a237e, #3949ab);
+        
+        video:hover::-webkit-media-controls {
+            opacity: 1;
         }
 
+        /* 滚动条样式优化 - 移除不需要的部分 */
+        .video-grid::-webkit-scrollbar,
+        .video-grid::-webkit-scrollbar-track,
+        .video-grid::-webkit-scrollbar-thumb,
+        .video-grid::-webkit-scrollbar-thumb:hover {
+            display: none;
+        }
+
+        /* 移除旧的视频网格定义 */
+        
         /* 页脚样式 */
         footer {
             font-family: 'Montserrat', sans-serif;
@@ -357,10 +362,69 @@
         /* 滚动视图辅助样式 */
         .video-scroll-container {
             width: 100%;
-            overflow-x: auto;
-            padding: 5px;
             margin: 0 auto;
-            scrollbar-width: thin;
+            padding: 0;
+            max-width: 1200px;
+        }
+        
+        .video-grid {
+            display: grid;
+            gap: 5px;
+            justify-content: center;
+            padding: 0.2rem;
+            width: 100%;
+            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            max-width: 1200px;
+        }
+        
+        /* 特殊布局：5个视频时第一行2个第二行3个，确保宽度匹配 */
+        .video-grid.grid-5 {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto auto;
+            gap: 5px;
+            grid-template-areas: 
+                "item1 item1 item1 item1 item1 item1 item2 item2 item2 item2 item2 item2"
+                "item3 item3 item3 item3 item4 item4 item4 item4 item5 item5 item5 item5";
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        /* 移除缩放，通过网格控制宽度 */
+        .video-grid.grid-5 .video-container:nth-child(1),
+        .video-grid.grid-5 .video-container:nth-child(2) {
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .video-grid.grid-5 .video-container:nth-child(1) { grid-area: item1; }
+        .video-grid.grid-5 .video-container:nth-child(2) { grid-area: item2; }
+        .video-grid.grid-5 .video-container:nth-child(3) { grid-area: item3; }
+        .video-grid.grid-5 .video-container:nth-child(4) { grid-area: item4; }
+        .video-grid.grid-5 .video-container:nth-child(5) { grid-area: item5; }
+        
+        /* 特殊布局：4个视频时2x2排列 */
+        .video-grid.grid-4 {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+        
+        /* 减小所有网格间距 */
+        .video-grid {
+            gap: 5px;
+        }
+        
+        .video-container {
+            background: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            padding: 0.4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -382,15 +446,10 @@
             .abstract {
                 padding: 1rem;
             }
-            .video-grid {
-                padding: 0.3rem;
-                justify-content: flex-start;
-                width: 100%;
-                overflow-x: auto;
-            }
             .video-container {
-                flex: 0 0 300px;  /* 保持视频大小不变 */
-                min-width: 270px;
+                min-width: 280px;
+                max-width: 300px;
+                margin: 0.3rem;
             }
             .motion-comparison .title.is-4 {
                 font-size: 1.2rem;
@@ -516,7 +575,7 @@
             width: 100%;
             max-width: 1200px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 5px;
         }
         
         .featured-video-item {
@@ -608,33 +667,33 @@
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem; font-weight: bold;">"Performing a back flip with a jump, tuck, and landing."</h4>
             <div class="video-grid-wrapper">
                 <div class="video-scroll-container">
-                    <div class="video-grid">
+                    <div class="video-grid grid-5">
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/OURS.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">Ours</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MotionLCM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MotionLCM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/BAMM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">BAMM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MoMask.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MoMask</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Performing a back flip with a jump , tuck , and landing/MDM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MDM</div>
@@ -650,33 +709,33 @@
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem; font-weight: bold;">"Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands."</h4>
             <div class="video-grid-wrapper">
                 <div class="video-scroll-container">
-                    <div class="video-grid">
+                    <div class="video-grid grid-5">
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/Ours_4x.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">Ours</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionLCM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MotionLCM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/BAMM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">BAMM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MoMask.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MoMask</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person does basketball layup dribbles, steps forward, jumps off one foot, lays ball into basket, lands/MotionDiffuse.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MotionDiffuse</div>
@@ -692,33 +751,33 @@
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem; font-weight: bold;">"Person executes Shaolin flying kicks ready stance."</h4>
             <div class="video-grid-wrapper">
                 <div class="video-scroll-container">
-                    <div class="video-grid">
+                    <div class="video-grid grid-5">
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/Ours.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">Ours</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MotionLCM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MotionLCM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/BAMM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">BAMM</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MoMask.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MoMask</div>
                         </div>
                         <div class="video-container">
-                            <video width="300" height="auto" controls>
+                            <video width="300" height="auto" controls autoplay loop muted>
                                 <source src="static/Videos/3D Motion Generation/Person executes Shaolin flying kicks ready stance/MDM.mp4" type="video/mp4">
                             </video>
                             <div class="video-label">MDM</div>
@@ -734,21 +793,21 @@
             <h4 class="title is-4 decorated-title" style="text-align: center; margin-bottom: 2rem; font-weight: bold;">"Executing an aerial kick with a running approach, twist, and landing."</h4>
             <div class="featured-video-container">
                 <div class="featured-video-item">
-                    <video class="featured-video" controls>
+                    <video class="featured-video" controls autoplay loop muted>
                         <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/OURS.mp4" type="video/mp4">
                     </video>
                     <div class="video-label">OURS</div>
                 </div>
                 
                 <div class="featured-video-item">
-                    <video class="featured-video" controls>
+                    <video class="featured-video" controls autoplay loop muted>
                         <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/MotionLCM.mp4" type="video/mp4">
                     </video>
                     <div class="video-label">MotionLCM</div>
                 </div>
                 
                 <div class="featured-video-item">
-                    <video class="featured-video" controls>
+                    <video class="featured-video" controls autoplay loop muted>
                         <source src="static/Videos/3D Motion Generation/Executing an aerial kick with a running approach, twist, and landing/BAMM.mp4" type="video/mp4">
                     </video>
                     <div class="video-label">BAMM</div>
@@ -764,11 +823,11 @@
         
         <div class="video-grid-wrapper">
             <div class="video-scroll-container">
-                <div class="video-grid">
+                <div class="video-grid grid-4">
                     <!-- Cartwheel -->
                     <div class="video-container">
                         <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem; font-weight: bold;">"A person flips sideways in a cartwheel motion."</h4>
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/2D  Pose Generation/A person flips sideways in a cartwheel motion/媒体3.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -777,7 +836,7 @@
                     <!-- Kungfu -->
                     <div class="video-container">
                         <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem; font-weight: bold;">"A person is performing Chinese kungfu."</h4>
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/2D  Pose Generation/A person is performing Chinese kungfu/媒体2.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -786,7 +845,7 @@
                     <!-- Backward flip -->
                     <div class="video-container">
                         <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem; font-weight: bold;">"A person jumps and flips backward in mid-air."</h4>
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/2D  Pose Generation/A person jumps and flips backward in mid-air/媒体1.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -795,7 +854,7 @@
                     <!-- Airborne flip -->
                     <div class="video-container">
                         <h4 class="title is-5" style="text-align: center; margin-bottom: 1rem; font-weight: bold;">"The person is airborne with knees bent, executing a flipping motion."</h4>
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/2D  Pose Generation/The person is airborne with knees bent, executing a flipping motion/媒体4.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -812,16 +871,16 @@
         
         <div class="video-grid-wrapper">
             <div class="video-scroll-container">
-                <div class="video-grid">
+                <div class="video-grid grid-4">
                     <!-- First comparison -->
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/3D pose estimation from real-world/1.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Input Video</div>
                     </div>
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/3D pose estimation from real-world/1_.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -829,13 +888,13 @@
 
                     <!-- Second comparison -->
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/3D pose estimation from real-world/2.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Input Video</div>
                     </div>
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/3D pose estimation from real-world/2_.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Generated Result</div>
@@ -852,16 +911,16 @@
         
         <div class="video-grid-wrapper">
             <div class="video-scroll-container">
-                <div class="video-grid">
+                <div class="video-grid grid-4">
                     <!-- First comparison -->
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/VQ-VAE motion reconstruction/Real1.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Input Motion</div>
                     </div>
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/VQ-VAE motion reconstruction/our1.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Reconstructed Motion</div>
@@ -869,13 +928,13 @@
 
                     <!-- Second comparison -->
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/VQ-VAE motion reconstruction/Real2.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Input Motion</div>
                     </div>
                     <div class="video-container">
-                        <video width="300" height="auto" controls>
+                        <video width="300" height="auto" controls autoplay loop muted>
                             <source src="static/Videos/VQ-VAE motion reconstruction/our2.mp4" type="video/mp4">
                         </video>
                         <div class="video-label">Reconstructed Motion</div>
